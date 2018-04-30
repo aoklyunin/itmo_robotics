@@ -1,0 +1,41 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="physics" value="ode"/>
+    </include>
+    <arg name="control_type" default="Position"/>
+
+    <param
+            name="robot_description"
+            command="$(find xacro)/xacro --inorder '$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14.xacro'
+                     control_type:=$(arg control_type)
+                        "/>
+
+    <node
+            name="spawn_model"
+            pkg="gazebo_ros"
+            type="spawn_model"
+            args="-param robot_description -urdf -model kuka_iiwa_14"
+            output="screen"/>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find kuka_iiwa_14_support)/config/controllers.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/kuka_iiwa_14"
+          args="joint_state_controller
+	joint_1_$(arg control_type)_controller
+	joint_2_$(arg control_type)_controller
+	joint_3_$(arg control_type)_controller
+	joint_4_$(arg control_type)_controller
+	joint_5_$(arg control_type)_controller
+	joint_6_$(arg control_type)_controller
+    "/>
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+          respawn="false" output="screen">
+        <remap from="/joint_states" to="/kuka_iiwa_14/joint_states"/>
+    </node>
+
+</launch>

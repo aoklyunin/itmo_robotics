@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot name="kuka_youbot" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:arg name="control_type" default="Position"/>
+
+    <!-- ROS control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/kuka_youbot</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+    <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_gazebo.xacro"/>
+    <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_macro.xacro"/>
+    <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_transmission.xacro"
+                   arg="$(arg control_type)"/>
+
+    <xacro:kuka_youbot prefix=""/>
+    <xacro:kuka_youbot_transmission prefix=""/>
+    <xacro:kuka_youbot_gazebo prefix=""/>
+
+</robot>
+

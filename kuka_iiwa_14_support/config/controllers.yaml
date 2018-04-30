@@ -1,0 +1,82 @@
+kuka_iiwa_14:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  # Effort controllers -----------------------------------
+  joint_1_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_1
+ 
+  joint_2_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_2
+
+  joint_3_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_3
+ 
+  joint_4_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_4
+
+  joint_5_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_5
+ 
+
+  joint_6_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_6
+
+  # Position controllers -----------------------------------
+  joint_1_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_1
+
+  joint_2_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_2
+
+  joint_3_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_3
+
+  joint_4_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_4
+
+  joint_5_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_5
+
+  joint_6_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_6
+
+  # Velocity controllers -----------------------------------
+  joint_1_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_1
+
+  joint_2_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_2
+
+  joint_3_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_3
+
+  joint_4_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_4
+
+  joint_5_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_5
+
+  joint_6_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_6
+

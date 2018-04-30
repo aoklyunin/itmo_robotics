@@ -1,0 +1,168 @@
+kuka_youbot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  # Effort controllers -----------------------------------
+  joint_1_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_1
+ 
+  joint_2_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_2
+
+  joint_3_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_3
+ 
+  joint_4_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_4
+
+  joint_5_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_5
+    
+  caster_joint_fl_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: caster_joint_fl
+    
+  caster_joint_fr_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: caster_joint_fr
+  
+  caster_joint_bl_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: caster_joint_bl
+    
+  caster_joint_br_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: caster_joint_br
+        
+  wheel_joint_fl_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wheel_joint_fl
+    
+  wheel_joint_fr_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wheel_joint_fr
+  
+  wheel_joint_bl_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wheel_joint_bl
+    
+  wheel_joint_br_Effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: wheel_joint_br
+    
+
+  # Position controllers -----------------------------------
+  joint_1_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_1
+
+  joint_2_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_2
+
+  joint_3_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_3
+
+  joint_4_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_4
+
+  joint_5_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint_5
+
+      
+  caster_joint_fl_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: caster_joint_fl
+    
+  caster_joint_fr_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: caster_joint_fr
+  
+  caster_joint_bl_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: caster_joint_bl
+    
+  caster_joint_br_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: caster_joint_br
+        
+  wheel_joint_fl_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: wheel_joint_fl
+    
+  wheel_joint_fr_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: wheel_joint_fr
+  
+  wheel_joint_bl_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: wheel_joint_bl
+    
+  wheel_joint_br_Position_controller:
+    type: position_controllers/JointPositionController
+    joint: wheel_joint_br
+    
+  # Velocity controllers -----------------------------------
+
+  joint_1_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_1
+
+  joint_2_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_2
+
+  joint_3_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_3
+
+  joint_4_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_4
+
+  joint_5_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: joint_5
+
+
+  caster_joint_fl_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: caster_joint_fl
+
+  caster_joint_fr_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: caster_joint_fr
+
+  caster_joint_bl_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: caster_joint_bl
+
+  caster_joint_br_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: caster_joint_br
+
+  wheel_joint_fl_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: wheel_joint_fl
+
+  wheel_joint_fr_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: wheel_joint_fr
+
+  wheel_joint_bl_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: wheel_joint_bl
+
+  wheel_joint_br_Velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: wheel_joint_br

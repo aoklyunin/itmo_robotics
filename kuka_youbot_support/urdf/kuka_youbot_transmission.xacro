@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:macro name="kuka_youbot_transmission" params="prefix">
+
+        <xacro:arg name="control_type" default="Position"/>
+
+        <transmission name="${prefix}effort_tran1">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}joint_1">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}motor1">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}tran2">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}joint_2">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}motor2">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}tran3">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}joint_3">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}motor3">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}tran4">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}joint_4">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}motor4">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}tran5">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}joint_5">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}motor5">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}caster_fl_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}caster_joint_fl">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}caster_fl_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}caster_br_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}caster_joint_br">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}caster_br_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}caster_fr_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}caster_joint_fr">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}caster_fr_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}caster_bl_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}caster_joint_bl">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}caster_bl_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+
+        <transmission name="${prefix}wheel_fl_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}wheel_joint_fl">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}wheel_fl_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}wheel_br_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}wheel_joint_br">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}wheel_br_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}wheel_fr_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}wheel_joint_fr">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}wheel_fr_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <transmission name="${prefix}wheel_bl_tran">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}wheel_joint_bl">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}wheel_bl_motor">
+                <hardwareInterface>hardware_interface/$(arg control_type)JointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+    </xacro:macro>
+</robot>
+

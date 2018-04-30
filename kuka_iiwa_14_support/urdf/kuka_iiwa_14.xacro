@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<robot name="kuka_iiwa_14" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:arg name="control_type" default="Position"/>
+
+    <!-- ROS control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/kuka_iiwa_14</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+    <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_gazebo.xacro"/>
+    <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_macro.xacro"/>
+    <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_transmission.xacro"
+                   arg="${control_type}"/>
+
+    <xacro:kuka_iiwa_14 prefix=""/>
+    <xacro:kuka_iiwa_14_transmission prefix=""/>
+    <xacro:kuka_iiwa_14_gazebo prefix=""/>
+
+    <link name="world"/>
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+    </joint>
+</robot>
+
