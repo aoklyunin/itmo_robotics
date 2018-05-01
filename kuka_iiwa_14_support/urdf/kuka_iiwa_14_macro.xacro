@@ -2,33 +2,19 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
     <xacro:macro name="kuka_iiwa_14" params="prefix">
 
-        <!-- some constants -->
-        <xacro:property name="max_effort" value="300"/>
-        <xacro:property name="max_velocity" value="10"/>
-
-        <xacro:property name="damping_factor" value="0.1"/>
-
-        <xacro:property name="d0" value="${damping_factor*0.1}"/>
-        <xacro:property name="d1" value="${damping_factor*0.1}"/>
-        <xacro:property name="d2" value="${damping_factor*0.1}"/>
-        <xacro:property name="d3" value="${damping_factor*0.1}"/>
-        <xacro:property name="d4" value="${damping_factor*0.1}"/>
-        <xacro:property name="d5" value="${damping_factor*0.1}"/>
-        <xacro:property name="d6" value="${damping_factor*0.1}"/>
-
-        <xacro:property name="friction_factor" value="0.1"/>
-
-        <xacro:property name="f0" value="${friction_factor*0.1}"/>
-        <xacro:property name="f1" value="${friction_factor*0.1}"/>
-        <xacro:property name="f2" value="${friction_factor*0.1}"/>
-        <xacro:property name="f3" value="${friction_factor*0.1}"/>
-        <xacro:property name="f4" value="${friction_factor*0.1}"/>
-        <xacro:property name="f5" value="${friction_factor*0.1}"/>
-        <xacro:property name="f6" value="${friction_factor*0.1}"/>
 
         <xacro:property name="PI" value="3.14"/>
 
         <!-- ********************* LINKS *********************** -->
+
+        <link name="world"/>
+
+        <joint name="world_joint" type="fixed">
+            <parent link="world"/>
+            <child link="base_link"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </joint>
+
         <link name="${prefix}base_link">
             <inertial>
                 <origin xyz="-0.1 0 0.07" rpy="0 0 0"/>
@@ -41,7 +27,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_0.dae"/>
                 </geometry>
-                <material name="Grey"/>
             </visual>
 
             <collision>
@@ -49,7 +34,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_0.stl"/>
                 </geometry>
-                <material name="Grey"/>
             </collision>
 
             <self_collision_checking>
@@ -71,7 +55,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_1.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -79,7 +62,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_1.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
         <link name="${prefix}link_2">
@@ -94,7 +76,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_2.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -102,7 +83,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_2.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
         <link name="${prefix}link_3">
@@ -117,7 +97,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_3.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -125,7 +104,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_3.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
         <link name="${prefix}link_4">
@@ -140,7 +118,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_4.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -148,7 +125,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_4.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
         <link name="${prefix}link_5">
@@ -163,7 +139,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_5.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -171,7 +146,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_5.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
         <link name="${prefix}link_6">
@@ -186,7 +160,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_6.dae"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
 
             <collision>
@@ -194,7 +167,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_6.stl"/>
                 </geometry>
-                <material name="Orange"/>
             </collision>
         </link>
 
@@ -210,7 +182,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/visual/link_7.dae"/>
                 </geometry>
-                <material name="Grey"/>
             </visual>
 
             <collision>
@@ -218,7 +189,6 @@
                 <geometry>
                     <mesh filename="package://kuka_iiwa_14_support/meshes/collision/link_7.stl"/>
                 </geometry>
-                <material name="Grey"/>
             </collision>
         </link>
 
@@ -234,8 +204,8 @@
             <origin xyz="0 0 0.1575" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * PI / 180}" upper="${170 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d0}" friction="${f0}"/>
+                   effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_2" type="revolute">
@@ -244,8 +214,8 @@
             <origin xyz="0 0 0.2025" rpy="${PI / 2}   0 ${PI}"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-120 * PI / 180}" upper="${120 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d1}" friction="${f1}"/>
+                          effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_3" type="revolute">
@@ -254,8 +224,8 @@
             <origin xyz="0 0.2045 0" rpy="${PI / 2} 0 ${PI}"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * PI / 180}" upper="${170 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d2}" friction="${f2}"/>
+                           effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_4" type="revolute">
@@ -264,8 +234,8 @@
             <origin xyz="0 0 0.2155" rpy="${PI / 2} 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-120 * PI / 180}" upper="${120 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d3}" friction="${f3}"/>
+                          effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_5" type="revolute">
@@ -274,8 +244,8 @@
             <origin xyz="0 0.1845 0" rpy="${-PI / 2} ${PI} 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * PI / 180}" upper="${170 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d4}" friction="${f4}"/>
+                          effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_6" type="revolute">
@@ -284,8 +254,8 @@
             <origin xyz="0 0 0.2155" rpy="${PI / 2} 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-120 * PI / 180}" upper="${120 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d5}" friction="${f5}"/>
+                      effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_7" type="revolute">
@@ -294,8 +264,8 @@
             <origin xyz="0 0.081 0" rpy="${- PI / 2} ${PI} 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-175 * PI / 180}" upper="${175 * PI / 180}"
-                   effort="${max_effort}" velocity="${max_velocity}"/>
-            <dynamics damping="${d6}" friction="${f6}"/>
+                           effort="300" velocity="10"/>
+            <dynamics damping="0.1" friction="0.1"/>
         </joint>
 
         <joint name="${prefix}joint_7-tool0" type="fixed">

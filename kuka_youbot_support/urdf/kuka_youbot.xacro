@@ -1,17 +1,21 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <robot name="kuka_youbot" xmlns:xacro="http://wiki.ros.org/xacro">
 
     <xacro:arg name="control_type" default="Position"/>
+    <xacro:arg name="main_frame_name" default="footprint"/>
 
     <!-- Import all Gazebo-customization elements, including Gazebo colors -->
     <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_gazebo.xacro"/>
     <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_macro.xacro"/>
     <xacro:include filename="$(find kuka_youbot_support)/urdf/kuka_youbot_transmission.xacro"/>
 
-    <xacro:kuka_youbot prefix=""/>
+    <xacro:kuka_youbot prefix="" main_frame_name="$(arg main_frame_name)"/>
     <xacro:kuka_youbot_transmission prefix="" control_type="$(arg control_type)"/>
-    <xacro:kuka_youbot_gazebo prefix=""/>
+    <xacro:kuka_youbot_gazebo prefix="" main_frame_name="$(arg main_frame_name)"/>
+
+    <!-- For mobile robots we can not set world as main frame, but rvis requires it. Because of that we need to specify
+    name of main frame with run parameter-->
 
 </robot>
 

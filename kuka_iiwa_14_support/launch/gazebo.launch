@@ -24,12 +24,12 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
           output="screen" ns="/kuka_iiwa_14"
           args="joint_state_controller
-	joint_1_$(arg control_type)_controller
-	joint_2_$(arg control_type)_controller
-	joint_3_$(arg control_type)_controller
-	joint_4_$(arg control_type)_controller
-	joint_5_$(arg control_type)_controller
-	joint_6_$(arg control_type)_controller
+	            joint_1_$(arg control_type)_controller
+	            joint_2_$(arg control_type)_controller
+	            joint_3_$(arg control_type)_controller
+	            joint_4_$(arg control_type)_controller
+	            joint_5_$(arg control_type)_controller
+	            joint_6_$(arg control_type)_controller
     "/>
 
     <!-- convert joint states to TF transforms for rviz, etc -->

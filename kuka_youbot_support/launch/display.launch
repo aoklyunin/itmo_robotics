@@ -3,7 +3,8 @@
   <arg name="gui" default="true" />
   <param
     name="robot_description"
-   	   command="$(find xacro)/xacro --inorder '$(find kuka_youbot_support)/urdf/kuka_youbot.xacro'"/>
+   	   command="$(find xacro)/xacro --inorder '$(find kuka_youbot_support)/urdf/kuka_youbot.xacro' main_frame_name:='world'"/>
+
   <param name="use_gui" value="$(arg gui)" />
   <node
     name="joint_state_publisher"
@@ -17,6 +18,6 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find comau_ns16_1_65_support)/config/urdf.rviz" />
+    args="-d $(find kuka_youbot_support)/config/urdf.rviz" />
 </launch>
 

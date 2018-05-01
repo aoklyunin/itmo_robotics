@@ -14,20 +14,12 @@
     <!-- Import all Gazebo-customization elements, including Gazebo colors -->
     <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_gazebo.xacro"/>
     <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_macro.xacro"/>
-    <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_transmission.xacro"
-                   arg="${control_type}"/>
+    <xacro:include filename="$(find kuka_iiwa_14_support)/urdf/kuka_iiwa_14_transmission.xacro"/>
 
     <xacro:kuka_iiwa_14 prefix=""/>
-    <xacro:kuka_iiwa_14_transmission prefix=""/>
+    <xacro:kuka_iiwa_14_transmission prefix="" control_type="$(arg control_type)"/>
     <xacro:kuka_iiwa_14_gazebo prefix=""/>
 
-    <link name="world"/>
 
-    <joint name="world_joint" type="fixed">
-        <parent link="world"/>
-        <child link="base_link"/>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-
-    </joint>
 </robot>
 

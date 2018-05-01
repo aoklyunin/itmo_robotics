@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0"  encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-    <xacro:macro name="kuka_youbot_gazebo" params="prefix">
+    <xacro:macro name="kuka_youbot_gazebo" params="prefix main_frame_name">
 
         <!--***********************ARM****************************-->
-         <gazebo>
+        <gazebo>
             <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
                 <robotNamespace>/kuka_youbot</robotNamespace>
             </plugin>
@@ -63,7 +63,7 @@
         <gazebo reference="caster_link_br">
             <material value="youbot/Orange"/>
         </gazebo>
-          <gazebo reference="${prefix}_palm_link">
+        <gazebo reference="${prefix}_palm_link">
             <material>Gazebo/Black</material>
             <turnGravityOff>false</turnGravityOff>
             <selfCollide>true</selfCollide>
@@ -74,7 +74,7 @@
                 <odometryTopic>/kuka_youbot/odom</odometryTopic>
                 <odometryFrame>/kuka_youbot/odom</odometryFrame>
                 <odometryRate>100.0</odometryRate>
-                <robotBaseFrame>base_footprint</robotBaseFrame>
+                <robotBaseFrame>${prefix}${main_frame_name}</robotBaseFrame>
             </plugin>
         </gazebo>
         <!--***************************************GRIPPER*****************************-->
