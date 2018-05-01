@@ -1,101 +1,136 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- common properties -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="threshold" value="0.01"/>
+
+    <!-- arm limits positions (deg) -->
+    <xacro:property name="joint_1_limit" value="${PI * (169 + 169) / 180}"/>
+    <xacro:property name="joint_2_limit" value="${PI * (90 + 65) / 180}"/>
+    <xacro:property name="joint_3_limit" value="${PI * (146 + 151) / 180}"/>
+    <xacro:property name="joint_4_limit" value="${PI * (102.5 + 102.5) / 180}"/>
+    <xacro:property name="joint_5_limit" value="${PI * (167.5 + 167.5) / 180}"/>
+
+    <!-- dynamic properties : mass (kg) Alu data sheet -->
+    <xacro:property name="link_0_mass" value="0.845"/>
+    <xacro:property name="link_1_mass" value="2.412"/>
+    <xacro:property name="link_2_mass" value="1.155"/>
+    <xacro:property name="link_3_mass" value="0.934"/>
+    <xacro:property name="link_4_mass" value="0.877"/>
+    <xacro:property name="link_5_mass" value="0.251"/>
+    <!-- simplified box collision geometry for base -->
+    <xacro:property name="base_size_x" value="0.570"/>
+    <xacro:property name="base_size_y" value="0.360"/>
+    <xacro:property name="base_size_z" value="0.100"/>
+    <xacro:property name="base_mass" value="100.0"/>
+
+    <xacro:property name="caster_offset_x" value="0.228"/>
+    <xacro:property name="caster_offset_y" value="0.158"/>
+    <xacro:property name="caster_offset_z" value="-0.034"/>
+    <xacro:property name="caster_mass" value="0.1"/>
+
+    <xacro:property name="wheel_offset_x" value="0.0"/>
+    <xacro:property name="wheel_offset_y" value="0.0"/>
+    <xacro:property name="wheel_offset_z" value="0.0"/>
+
+    <xacro:property name="wheel_mass" value="0.4"/>
+    <xacro:property name="wheel_radius" value="0.05"/>
+    <xacro:property name="wheel_length" value="0.005"/>
+
+    <xacro:property name="caster_joint_damping" value="1.0"/>
+    <xacro:property name="caster_joint_friction" value="1.0"/>
+    <xacro:property name="caster_joint_effort" value="30"/>
+    <xacro:property name="caster_joint_velocity" value="10"/>
+    <xacro:property name="caster_joint_safety_k_velocity" value="10.0"/>
+
+    <xacro:property name="wheel_joint_damping" value="1.0"/>
+    <xacro:property name="wheel_joint_friction" value="1.0"/>
+    <xacro:property name="wheel_joint_effort" value="30"/>
+    <xacro:property name="wheel_joint_velocity" value="10"/>
+    <xacro:property name="wheel_joint_safety_k_velocity" value="10.0"/>
+
+    <!-- fingers limits, values are in meters -->
+    <xacro:property name="finger_joint" value="${0.023 / 2.0}"/>
+    <xacro:property name="finger_joint_soft" value="${(0.023 - threshold) / 2.0}"/>
+
+
     <xacro:macro name="kuka_youbot" params="prefix">
 
-        <xacro:property name="PI" value="3.14"/>
-
-        <!-- simplified box collision geometry for base -->
-        <xacro:property name="base_size_x" value="0.570"/>
-        <xacro:property name="base_size_y" value="0.360"/>
-        <xacro:property name="base_size_z" value="0.100"/>
-        <xacro:property name="base_mass" value="22.0"/>
-
-        <xacro:property name="caster_offset_x" value="0.228"/>
-        <xacro:property name="caster_offset_y" value="0.158"/>
-        <xacro:property name="caster_offset_z" value="-0.034"/>
-        <xacro:property name="caster_mass" value="0.1"/>
-
-        <xacro:property name="wheel_offset_x" value="0.0"/>
-        <xacro:property name="wheel_offset_y" value="0.0"/>
-        <xacro:property name="wheel_offset_z" value="0.0"/>
-
-        <xacro:property name="wheel_mass" value="0.4"/>
-        <xacro:property name="wheel_radius" value="0.05"/>
-        <xacro:property name="wheel_length" value="0.005"/>
-
-        <xacro:property name="caster_joint_damping" value="1.0"/>
-        <xacro:property name="caster_joint_friction" value="1.0"/>
-        <xacro:property name="caster_joint_effort" value="30"/>
-        <xacro:property name="caster_joint_velocity" value="10"/>
-        <xacro:property name="caster_joint_safety_k_velocity" value="10.0"/>
-
-        <xacro:property name="wheel_joint_damping" value="1.0"/>
-        <xacro:property name="wheel_joint_friction" value="1.0"/>
-        <xacro:property name="wheel_joint_effort" value="30"/>
-        <xacro:property name="wheel_joint_velocity" value="10"/>
-        <xacro:property name="wheel_joint_safety_k_velocity" value="10.0"/>
-
-        <xacro:property name="joint_1_limit" value="${PI * (169 + 169) / 180}"/>
-        <xacro:property name="joint_2_limit" value="${PI * (90 + 65) / 180}"/>
-        <xacro:property name="joint_3_limit" value="${PI * (146 + 151) / 180}"/>
-        <xacro:property name="joint_4_limit" value="${PI * (102.5 + 102.5) / 180}"/>
-        <xacro:property name="joint_5_limit" value="${PI * (167.5 + 167.5) / 180}"/>
-
-        <xacro:property name="joint_1_limit_soft" value="${PI * (169 + 169) / 180 - threshold}"/>
-        <xacro:property name="joint_2_limit_soft" value="${PI * (90 + 65) / 180 - threshold}"/>
-        <xacro:property name="joint_3_limit_soft" value="${PI * (146 + 151) / 180 - threshold}"/>
-        <xacro:property name="joint_4_limit_soft" value="${PI * (102.5 + 102.5) / 180 - threshold}"/>
-        <xacro:property name="joint_5_limit_soft" value="${PI * (167.5 + 167.5) / 180 - threshold}"/>
-
-        <!-- dynamic properties : mass (kg) Alu data sheet -->
-        <xacro:property name="link_0_mass" value="0.845"/>
-        <xacro:property name="link_1_mass" value="2.412"/>
-        <xacro:property name="link_2_mass" value="1.155"/>
-        <xacro:property name="link_3_mass" value="0.934"/>
-        <xacro:property name="link_4_mass" value="0.877"/>
-        <xacro:property name="link_5_mass" value="0.251"/>
-
-        <!-- ********************* LINKS *********************** -->
-
-
+        <!--******************************************BASE*************************************************-->
+        <link name="${prefix}_footprint">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+        <link name="${prefix}plate_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="1"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/plate.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/plate_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
         <link name="${prefix}base_link">
-            <!--<inertial>-->
-                <!--<origin xyz="0 0 0"/>-->
-                <!--<mass value="${base_mass}"/>-->
-                <!--<inertia ixx="5.652232699207" ixy="-0.009719934438" ixz="1.293988226423" iyy="5.669473158652"-->
-                         <!--iyz="-0.007379583694" izz="3.683196351726"/>-->
-            <!--</inertial>-->
+            <inertial>
+                <mass value="${base_mass}"/>
+                <origin xyz="0 0 0"/>
+                <inertia ixx="5.652232699207" ixy="-0.009719934438" ixz="1.293988226423" iyy="5.669473158652"
+                         iyz="-0.007379583694" izz="3.683196351726"/>
+            </inertial>
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
                     <mesh filename="package://kuka_youbot_support/meshes/visual/base.dae"/>
                 </geometry>
-                <material name="DarkGrey"/>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <!--<box size="${base_size_x} ${base_size_y} ${base_size_z}" />-->
-                    <mesh filename="package://kuka_youbot_support/meshes/collision/base.stl"/>
+                   <mesh filename="package://kuka_youbot_support/meshes/collision/base_convex.dae"/>
                 </geometry>
             </collision>
         </link>
-
-
-        <link name="${prefix}wheel_link_fl">
+        <link name="caster_link_fl">
             <inertial>
+                <mass value="${caster_mass}"/>
                 <origin xyz="0 0 0"/>
+                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
+                         iyz="-0.000004273467" izz="0.011763977943"/>
+            </inertial>
+        </link>
+        <link name="wheel_link_fl">
+            <inertial>
                 <mass value="${wheel_mass}"/>
+                <origin xyz="0 0 0"/>
                 <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
                          iyz="-0.000004273467" izz="0.011763977943"/>
             </inertial>
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
-                <!--<mesh filename="package://youbot_description/meshes/youbot_base/youbot_wheel.stl" />-->
-                <geometry>
+                 <geometry>
                     <sphere radius="${wheel_radius}"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -104,22 +139,26 @@
                 </geometry>
             </collision>
         </link>
-
-
-        <link name="${prefix}wheel_link_fr">
+        <link name="caster_link_fr">
             <inertial>
+                <mass value="${caster_mass}"/>
                 <origin xyz="0 0 0"/>
+                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
+                         iyz="-0.000004273467" izz="0.011763977943"/>
+            </inertial>
+        </link>
+        <link name="wheel_link_fr">
+            <inertial>
                 <mass value="${wheel_mass}"/>
+                <origin xyz="0 0 0"/>
                 <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
                          iyz="-0.000004273467" izz="0.011763977943"/>
             </inertial>
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <!--<mesh filename="package://youbot_description/meshes/youbot_base/youbot_wheel.stl" />-->
                     <sphere radius="${wheel_radius}"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -128,22 +167,26 @@
                 </geometry>
             </collision>
         </link>
-
-
-        <link name="${prefix}wheel_link_bl">
+        <link name="caster_link_bl">
             <inertial>
+                <mass value="${caster_mass}"/>
                 <origin xyz="0 0 0"/>
+                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
+                         iyz="-0.000004273467" izz="0.011763977943"/>
+            </inertial>
+        </link>
+        <link name="wheel_link_bl">
+            <inertial>
                 <mass value="${wheel_mass}"/>
+                <origin xyz="0 0 0"/>
                 <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
                          iyz="-0.000004273467" izz="0.011763977943"/>
             </inertial>
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <!--<mesh filename="package://youbot_description/meshes/youbot_base/youbot_wheel.stl" />-->
-                    <sphere radius="${wheel_radius}"/>
+                     <sphere radius="${wheel_radius}"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -152,21 +195,26 @@
                 </geometry>
             </collision>
         </link>
-
-        <link name="${prefix}wheel_link_br">
+        <link name="caster_link_br">
             <inertial>
+                <mass value="${caster_mass}"/>
                 <origin xyz="0 0 0"/>
+                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
+                         iyz="-0.000004273467" izz="0.011763977943"/>
+            </inertial>
+        </link>
+        <link name="wheel_link_br">
+            <inertial>
                 <mass value="${wheel_mass}"/>
+                <origin xyz="0 0 0"/>
                 <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
                          iyz="-0.000004273467" izz="0.011763977943"/>
             </inertial>
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <!--<mesh filename="package://youbot_description/meshes/youbot_base/youbot_wheel.stl" />-->
-                    <sphere radius="${wheel_radius}"/>
+                     <sphere radius="${wheel_radius}"/>
                 </geometry>
-                <material name="Orange"/>
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -175,286 +223,55 @@
                 </geometry>
             </collision>
         </link>
-
-
-        <link name="${prefix}caster_link_bl">
-            <inertial>
-                <origin xyz="0 0 0"/>
-                <mass value="${caster_mass}"/>
-                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
-                         iyz="-0.000004273467" izz="0.011763977943"/>
-            </inertial>
-        </link>
-
-        <link name="${prefix}caster_link_br">
-            <inertial>
-                <origin xyz="0 0 0"/>
-                <mass value="${caster_mass}"/>
-                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
-                         iyz="-0.000004273467" izz="0.011763977943"/>
-            </inertial>
-        </link>
-
-
-        <link name="${prefix}caster_link_fr">
-            <inertial>
-                <origin xyz="0 0 0"/>
-                <mass value="${caster_mass}"/>
-                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
-                         iyz="-0.000004273467" izz="0.011763977943"/>
-            </inertial>
-        </link>
-
-
-        <link name="${prefix}caster_link_fl">
-            <inertial>
-                <mass value="${caster_mass}"/>
-                <origin xyz="0 0 0"/>
-                <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983" iyy="0.015218160428"
-                         iyz="-0.000004273467" izz="0.011763977943"/>
-            </inertial>
-        </link>
-
-
-        <link name="${prefix}link_0">
-            <inertial>
-                <!--<origin xyz="0.023 0 0.006" rpy="0 0 0"/>-->
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-                <mass value="${link_0_mass}"/>
-                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm0.dae"/>
-                </geometry>
-                <material name="DarkGrey"/>
-            </visual>
-
-            <collision>
-                <!--<origin xyz="0.023 0 0.006" rpy="0 0 0"/>-->
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm0_convex.dae"/>
-                    <!--<cylinder length="0.078" radius="0.093"/>-->
-                </geometry>
-            </collision>
-
-        </link>
-
-
-        <link name="${prefix}link_1">
-            <inertial>
-                <mass value="${link_1_mass}"/>
-                <origin xyz="${14.89/1000} ${2.13/1000} ${2.13/1000}"
-                        rpy="0 0 0"/>
-                <inertia ixx="0.003863" ixy="-0.000979" ixz="0.000000" iyy="0.006196" iyz="0.000000" izz="0.006369"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm1.dae"/>
-                </geometry>
-                <!--<material name="Orange" />-->
-            </visual>
-
-            <collision>
-                <!--<origin xyz="0 0 -0.003" rpy="0 0 0" />-->
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm1_convex.dae"/>
-                    <!--<cylinder length="0.102" radius="0.080"/>-->
-                </geometry>
-            </collision>
-        </link>
-
-        <link name="${prefix}link_2">
-            <inertial>
-                <mass value="${link_2_mass}"/>
-                <origin xyz="${104.53/1000} ${1.7/1000} ${-2.97/1000}"
-                        rpy="0 0 0"/>
-                <inertia ixx="0.000823" ixy="0.000000" ixz="-0.000000" iyy="0.004447" iyz="0.000000" izz="0.004439"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0 -0.032 0.078" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm2.dae"/>
-                </geometry>
-                <material name="Orange"/>
-            </visual>
-
-            <collision>
-                <!--<origin xyz="0.001 -0.041 0.074" rpy="0 0 0" />-->
-                <origin xyz="0 -0.032 0.078" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm2_convex.dae"/>
-                    <!--<box size="0.074 0.082 0.222"/>-->
-                </geometry>
-            </collision>
-        </link>
-
-
-        <link name="${prefix}link_3">
-            <inertial>
-                <mass value="${link_3_mass}"/>
-                <origin xyz="${0.1/1000} ${96.7/1000} ${21.07/1000}"
-                        rpy="0 0 0"/>
-                <inertia ixx="0.002459" ixy="0.000000" ixz="0.000000" iyy="0.002571" iyz="-0.000000" izz="0.000535"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0.000 0.028 0.079" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm3.dae"/>
-                </geometry>
-                <material name="Orange"/>
-            </visual>
-
-            <collision>
-                <!--<origin xyz="0.000 0.025 0.067" rpy="0 0 0" />-->
-                <origin xyz="0.000 0.028 0.079" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm3_convex.dae"/>
-                    <!--<box size="0.064 0.054 0.192"/>-->
-                </geometry>
-            </collision>
-        </link>
-
-        <link name="${prefix}link_4">
-            <inertial>
-                <mass value="${link_4_mass}"/>
-                <origin xyz="${0.11/1000} ${51.03/1000} ${-23.19/1000}"
-                        rpy="0 0 0"/>
-                <inertia ixx="0.000869" ixy="0.000000" ixz="-0.000000" iyy="0.001173" iyz="-0.000231" izz="0.001091"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm4.dae"/>
-                </geometry>
-                <material name="Orange"/>
-            </visual>
-
-            <collision>
-                <!--<origin xyz="0 0 0.026" rpy="0 0 0" />-->
-                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm4_convex.dae"/>
-                    <!--<box size="0.058 0.100 0.118"/>-->
-                </geometry>
-            </collision>
-        </link>
-
-        <link name="${prefix}link_5">
-            <inertial>
-                <mass value="${link_5_mass}"/>
-                <origin xyz="${0/1000} ${1.15/1000} ${-16.83/1000}"
-                        rpy="0 0 0"/>
-                <inertia ixx="0.000280" ixy="0.000000" ixz="0.000000" iyy="0.000339" iyz="0.000000" izz="0.000119"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0.003 0 -0.034" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm5.dae"/>
-                </geometry>
-                <material name="DarkGrey"/>
-            </visual>
-
-            <collision>
-                <origin xyz="0.003 0 -0.034" rpy="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://youbot_description/meshes/youbot_arm/arm5_convex.dae"/>
-                    <!--<box size="0.054 0.096 0.030"/>-->
-                </geometry>
-            </collision>
-        </link>
-
-
-        <!-- This frame corresponds to the $FLANGE coordinate system in controllers -->
-        <link name="${prefix}tool0"/>
-
-        <!-- ********************* JOINTS *********************** -->
-
-        <!-- joint between arm_0_link and arm_1_link -->
-        <joint name="${prefix}joint_1" type="revolute">
-            <origin xyz="0.024 0 0.096" rpy="0 0 ${170 * PI / 180}"/>
-            <parent link="${prefix}link_0"/>
-            <child link="${prefix}link_1"/>
-            <axis xyz="0 0 -1"/>
-            <dynamics damping="1" friction="1"/>
-            <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${joint_1_limit}"/>
+        <joint name="${prefix}plate_joint" type="fixed">
+            <origin xyz="-0.159 0 0.046" rpy="0 0 0"/>
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}plate_link"/>
         </joint>
-
-
-        <joint name="${prefix}joint_2" type="revolute">
-            <origin xyz="0.033 0 0.019" rpy="0 ${-65 * PI / 180} 0"/>
-            <parent link="${prefix}link_1"/>
-            <child link="${prefix}link_2"/>
-            <axis xyz="0 1 0"/>
-            <!--<calibration rising="${arm_2_ref}" falling="${arm_2_ref}"/>-->
-            <dynamics damping="1" friction="1"/>
-            <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${joint_2_limit}"/>
-
+        <joint name="${prefix}_footprint_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <child link="${prefix}base_link"/>
+            <parent link="${prefix}_footprint"/>
         </joint>
-
-        <joint name="${prefix}joint_3" type="revolute">
-            <origin xyz="0.000 0.000 0.155" rpy="0 ${146 * PI / 180} 0"/>
-            <parent link="${prefix}link_2"/>
-            <child link="${prefix}link_3"/>
-            <axis xyz="0 1 0"/>
-            <dynamics damping="1" friction="1"/>
-            <limit effort="${6}" velocity="${PI / 2.0}" lower="-${joint_3_limit}" upper="0"/>
-
-        </joint>
-
-
-        <!-- joint between arm_3_link and arm_4_link -->
-        <joint name="${prefix}joint_4" type="revolute">
-            <origin xyz="0.000 0.000 0.135" rpy="0 ${-102.5 * PI / 180} 0"/>
-            <parent link="${prefix}link_3"/>
-            <child link="${prefix}link_4"/>
-            <axis xyz="0 1 0"/>
-            <!--<calibration rising="${arm_4_ref}" falling="${arm_4_ref}"/>-->
-            <dynamics damping="1" friction="1"/>
-            <limit effort="${2}" velocity="${PI / 2.0}" lower="0" upper="${joint_4_limit}"/>
-
-        </joint>
-
-
-        <!-- joint between arm_4_link and arm_5_link -->
-        <joint name="${prefix}joint_5" type="revolute">
-            <origin xyz="-0.002 0 0.130" rpy="0 0 ${167.5 * PI / 180}"/>
-            <parent link="${prefix}link_4"/>
-            <child link="${prefix}link_5"/>
-            <axis xyz="0 0 -1"/>
-            <!--<calibration rising="${arm_5_ref}" falling="${arm_5_ref}"/>-->
-            <dynamics damping="1" friction="1"/>
-            <limit effort="1" velocity="${PI / 2.0}" lower="0" upper="${joint_5_limit}"/>
-
-        </joint>
-
-        <joint name="wheel_joint_br" type="continuous">
-            <axis xyz="0 1 0"/>
-            <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
-            <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
-            <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
-            <parent link="${prefix}caster_link_br"/>
-            <child link="${prefix}wheel_link_br"/>
-        </joint>
-
-        <!-- back right wheel -->
-        <joint name="caster_joint_br" type="continuous">
-            <origin xyz="${-caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
+        <joint name="caster_joint_fl" type="continuous">
+            <origin xyz="${caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
             <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
             <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}caster_link_br"/>
+            <child link="caster_link_fl"/>
+        </joint>
+        <joint name="wheel_joint_fl" type="continuous">
+            <axis xyz="0 1 0"/>
+            <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
+            <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+            <parent link="caster_link_fl"/>
+            <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
+            <child link="wheel_link_fl"/>
+        </joint>
+        <joint name="caster_joint_fr" type="continuous">
+            <origin xyz="${caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
+            <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
+            <parent link="${prefix}base_link"/>
+            <child link="caster_link_fr"/>
+        </joint>
+        <joint name="wheel_joint_fr" type="continuous">
+            <axis xyz="0 1 0"/>
+            <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
+            <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
+            <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+            <parent link="caster_link_fr"/>
+            <child link="wheel_link_fr"/>
+        </joint>
+        <joint name="caster_joint_bl" type="continuous">
+            <origin xyz="${-caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
+            <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
+            <parent link="${prefix}base_link"/>
+            <child link="caster_link_bl"/>
         </joint>
         <joint name="wheel_joint_bl" type="continuous">
             <axis xyz="0 1 0"/>
@@ -462,70 +279,274 @@
             <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
             <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
             <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
-            <parent link="${prefix}caster_link_bl"/>
-            <child link="${prefix}wheel_link_bl"/>
+            <parent link="caster_link_bl"/>
+            <child link="wheel_link_bl"/>
         </joint>
-
-        <!-- back left wheel -->
-        <joint name="caster_joint_bl" type="continuous">
-            <origin xyz="${-caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
+        <joint name="caster_joint_br" type="continuous">
+            <origin xyz="${-caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
             <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
             <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}caster_link_bl"/>
+            <child link="caster_link_br"/>
         </joint>
-
-        <joint name="wheel_joint_fl" type="continuous">
-            <axis xyz="0 1 0"/>
-            <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
-            <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
-            <parent link="${prefix}caster_link_fl"/>
-            <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
-            <child link="${prefix}wheel_link_fl"/>
-        </joint>
-
-        <joint name="wheel_joint_fr" type="continuous">
+        <joint name="wheel_joint_br" type="continuous">
             <axis xyz="0 1 0"/>
             <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>
             <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
             <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
-            <parent link="${prefix}caster_link_fr"/>
-            <child link="${prefix}wheel_link_fr"/>
+            <parent link="caster_link_br"/>
+            <child link="wheel_link_br"/>
         </joint>
 
-        <!-- front right wheel -->
-        <joint name="caster_joint_fr" type="continuous">
-            <origin xyz="${caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
-            <axis xyz="0 0 1"/>
-            <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
-            <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
+        <!--**************************ARM************************************-->
+
+        <link name="${prefix}arm_link_0">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${link_0_mass}"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm0.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm0_convex.dae"/>
+                </geometry>
+            </collision>
+
+        </link>
+        <link name="${prefix}arm_link_1">
+            <inertial>
+                <mass value="${link_1_mass}"/>
+                <origin xyz="${14.89/1000} ${2.13/1000} ${2.13/1000}" rpy="0 0 0"/>
+                <inertia ixx="0.003863" ixy="-0.000979" ixz="0.000000" iyy="0.006196" iyz="0.000000" izz="0.006369"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm1.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm1_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+  <link name="${prefix}arm_link_2">
+            <inertial>
+                <mass value="${link_2_mass}"/>
+                <origin xyz="${104.53/1000} ${1.7/1000} ${-2.97/1000}"
+                        rpy="0 0 0"/>
+                <inertia ixx="0.000823" ixy="0.000000" ixz="-0.000000" iyy="0.004447" iyz="0.000000" izz="0.004439"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 -0.032 0.078" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm2.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 -0.032 0.078" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm2_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+         <link name="${prefix}arm_link_3">
+            <inertial>
+                <mass value="${link_3_mass}"/>
+                <origin xyz="${0.1/1000} ${96.7/1000} ${21.07/1000}"
+                        rpy="0 0 0"/>
+                <inertia ixx="0.002459" ixy="0.000000" ixz="0.000000" iyy="0.002571" iyz="-0.000000" izz="0.000535"/>
+            </inertial>
+            <visual>
+                <origin xyz="0.000 0.028 0.079" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm3.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.000 0.028 0.079" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm3_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+         <link name="${prefix}arm_link_4">
+            <inertial>
+                <mass value="${link_4_mass}"/>
+                <origin xyz="${0.11/1000} ${51.03/1000} ${-23.19/1000}"
+                        rpy="0 0 0"/>
+                <inertia ixx="0.000869" ixy="0.000000" ixz="-0.000000" iyy="0.001173" iyz="-0.000231" izz="0.001091"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm4.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm4_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+         <link name="${prefix}arm_link_5">
+            <inertial>
+                <mass value="${link_5_mass}"/>
+                <origin xyz="${0/1000} ${1.15/1000} ${-16.83/1000}"
+                        rpy="0 0 0"/>
+                <inertia ixx="0.000280" ixy="0.000000" ixz="0.000000" iyy="0.000339" iyz="0.000000" izz="0.000119"/>
+            </inertial>
+            <visual>
+                <origin xyz="0.003 0 -0.034" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/arm5.dae"/>
+                </geometry>
+            </visual>
+
+            <collision>
+                <origin xyz="0.003 0 -0.034" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/arm5_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}arm_joint_0" type="fixed">
+            <origin xyz="0.143 0 0.046" rpy="0 0 0"/>
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}caster_link_fr"/>
+            <child link="${prefix}arm_link_0"/>
+        </joint>
+        <joint name="${prefix}arm_joint_1" type="revolute">
+            <origin xyz="0.024 0 0.096" rpy="0 0 ${170 * PI / 180}"/>
+            <parent link="${prefix}arm_link_0"/>
+            <child link="${prefix}arm_link_1"/>
+            <axis xyz="0 0 -1"/>
+            <dynamics damping="1" friction="1"/>
+            <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${joint_1_limit}"/>
+        </joint>
+        <joint name="${prefix}arm_joint_2" type="revolute">
+            <origin xyz="0.033 0 0.019" rpy="0 ${-65 * PI / 180} 0"/>
+            <parent link="${prefix}arm_link_1"/>
+            <child link="${prefix}arm_link_2"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="1" friction="1"/>
+            <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${joint_2_limit}"/>
+        </joint>
+        <joint name="${prefix}arm_joint_3" type="revolute">
+            <origin xyz="0.000 0.000 0.155" rpy="0 ${146 * PI / 180} 0"/>
+            <parent link="${prefix}arm_link_2"/>
+            <child link="${prefix}arm_link_3"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="1" friction="1"/>
+            <limit effort="${6}" velocity="${PI / 2.0}" lower="-${joint_3_limit}" upper="0"/>
+        </joint>
+        <joint name="${prefix}arm_joint_4" type="revolute">
+            <origin xyz="0.000 0.000 0.135" rpy="0 ${-102.5 * PI / 180} 0"/>
+            <parent link="${prefix}arm_link_3"/>
+            <child link="${prefix}arm_link_4"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="1" friction="1"/>
+            <limit effort="${2}" velocity="${PI / 2.0}" lower="0" upper="${joint_4_limit}"/>
+        </joint>
+        <joint name="${prefix}arm_joint_5" type="revolute">
+            <origin xyz="-0.002 0 0.130" rpy="0 0 ${167.5 * PI / 180}"/>
+            <parent link="${prefix}arm_link_4"/>
+            <child link="${prefix}arm_link_5"/>
+            <axis xyz="0 0 -1"/>
+            <dynamics damping="1" friction="1"/>
+            <limit effort="1" velocity="${PI / 2.0}" lower="0" upper="${joint_5_limit}"/>
         </joint>
 
+        <!--*************************GRIPPER*********************-->
+        <link name="${prefix}gripper_finger_link_l">
+            <inertial>
+                <origin xyz="0 -0.001 0" rpy="0 0 0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/finger.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/finger_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+        <link name="${prefix}_palm_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.1"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/palm.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/palm_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
+         <link name="${prefix}gripper_finger_link_r">
+            <inertial>
+                <origin xyz="0.000 -0.001 0" rpy="0 0 0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://kuka_youbot_support/meshes/visual/finger.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.000 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <!--<box size="0.014 0.020 0.046"/>-->
+                    <mesh filename="package://kuka_youbot_support/meshes/collision/finger_convex.dae"/>
+                </geometry>
+            </collision>
+        </link>
 
-        <!-- front left wheel -->
-        <joint name="caster_joint_fl" type="continuous">
-            <origin xyz="${caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0"/>
-            <axis xyz="0 0 1"/>
-            <limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>
-            <dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}"/>
-            <parent link="${prefix}base_link"/>
-            <child link="${prefix}caster_link_fl"/>
+        <joint name="${prefix}_palm_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="${prefix}arm_link_5"/>
+            <child link="${prefix}_palm_link"/>
         </joint>
-
-
-        <joint name="${prefix}joint_5-tool0" type="fixed">
-            <parent link="${prefix}link_5"/>
-            <child link="${prefix}tool0"/>
-            <origin xyz="0 0 0" rpy="0 0.000000 0"/>
+        <joint name="${prefix}gripper_finger_joint_l" type="prismatic">
+            <origin xyz="0.004 0.008 0.046" rpy="0 0 ${PI}"/>
+            <parent link="${prefix}_palm_link"/>
+            <child link="${prefix}gripper_finger_link_l"/>
+            <axis xyz="0 -1 0"/>
+            <dynamics damping="1.0" friction="1.0"/>
+            <limit effort="1" velocity="0.1" lower="0" upper="${finger_joint}"/>
         </joint>
-
-        <joint name="${prefix}arm_base" type="fixed">
-            <parent link="${prefix}base_link"/>
-            <child link="${prefix}link_0"/>
-            <origin xyz="0 0 0" rpy="0 0.000000 0"/>
+        <joint name="${prefix}gripper_finger_joint_r" type="prismatic">
+            <origin xyz="0.004 -0.008 0.046" rpy="0 0 0"/>
+            <parent link="${prefix}_palm_link"/>
+            <child link="${prefix}gripper_finger_link_r"/>
+            <axis xyz="0 -1 0"/>
+            <dynamics damping="1.0" friction="1.0"/>
+            <limit effort="1" velocity="0.1" lower="0" upper="${finger_joint}"/>
         </joint>
 
 

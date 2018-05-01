@@ -2,4 +2,4 @@
 
 . ../../../../devel/setup.sh
 
-roslaunch comau_ns16_1_65_support gazebo.launch control_type:="Position"
+roslaunch kuka_youbot_support gazebo.launch control_type:="Position"

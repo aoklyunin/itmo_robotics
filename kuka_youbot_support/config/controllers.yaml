@@ -5,164 +5,91 @@ kuka_youbot:
     publish_rate: 50  
 
   # Effort controllers -----------------------------------
-  joint_1_Effort_controller:
+  arm_joint_1_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_1
+    joint: arm_joint_1
  
-  joint_2_Effort_controller:
+  arm_joint_2_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_2
+    joint: arm_joint_2
 
-  joint_3_Effort_controller:
+  arm_joint_3_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_3
+    joint: arm_joint_3
  
-  joint_4_Effort_controller:
+  arm_joint_4_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_4
+    joint: arm_joint_4
 
-  joint_5_Effort_controller:
+  arm_joint_5_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_5
-    
-  caster_joint_fl_Effort_controller:
+    joint: arm_joint_5
+
+  gripper_finger_joint_l_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: caster_joint_fl
-    
-  caster_joint_fr_Effort_controller:
+    joint: gripper_finger_joint_l
+
+  gripper_finger_joint_r_Effort_controller:
     type: effort_controllers/JointEffortController
-    joint: caster_joint_fr
-  
-  caster_joint_bl_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: caster_joint_bl
-    
-  caster_joint_br_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: caster_joint_br
-        
-  wheel_joint_fl_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: wheel_joint_fl
-    
-  wheel_joint_fr_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: wheel_joint_fr
-  
-  wheel_joint_bl_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: wheel_joint_bl
-    
-  wheel_joint_br_Effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: wheel_joint_br
-    
+    joint: gripper_finger_joint_r
+
 
   # Position controllers -----------------------------------
-  joint_1_Position_controller:
+  arm_joint_1_Position_controller:
     type: position_controllers/JointPositionController
-    joint: joint_1
+    joint: arm_joint_1
 
-  joint_2_Position_controller:
+  arm_joint_2_Position_controller:
     type: position_controllers/JointPositionController
-    joint: joint_2
+    joint: arm_joint_2
 
-  joint_3_Position_controller:
+  arm_joint_3_Position_controller:
     type: position_controllers/JointPositionController
-    joint: joint_3
+    joint: arm_joint_3
 
-  joint_4_Position_controller:
+  arm_joint_4_Position_controller:
     type: position_controllers/JointPositionController
-    joint: joint_4
+    joint: arm_joint_4
 
-  joint_5_Position_controller:
+  arm_joint_5_Position_controller:
     type: position_controllers/JointPositionController
-    joint: joint_5
+    joint: arm_joint_5
 
-      
-  caster_joint_fl_Position_controller:
+  gripper_finger_joint_l_Position_controller:
     type: position_controllers/JointPositionController
-    joint: caster_joint_fl
-    
-  caster_joint_fr_Position_controller:
+    joint: gripper_finger_joint_l
+
+  gripper_finger_joint_r_Position_controller:
     type: position_controllers/JointPositionController
-    joint: caster_joint_fr
-  
-  caster_joint_bl_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: caster_joint_bl
-    
-  caster_joint_br_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: caster_joint_br
-        
-  wheel_joint_fl_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: wheel_joint_fl
-    
-  wheel_joint_fr_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: wheel_joint_fr
-  
-  wheel_joint_bl_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: wheel_joint_bl
-    
-  wheel_joint_br_Position_controller:
-    type: position_controllers/JointPositionController
-    joint: wheel_joint_br
+    joint: gripper_finger_joint_r
+
     
   # Velocity controllers -----------------------------------
 
-  joint_1_Velocity_controller:
+  arm_joint_1_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: joint_1
+    joint: arm_joint_1
 
-  joint_2_Velocity_controller:
+  arm_joint_2_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: joint_2
+    joint: arm_joint_2
 
-  joint_3_Velocity_controller:
+  arm_joint_3_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: joint_3
+    joint: arm_joint_3
 
-  joint_4_Velocity_controller:
+  arm_joint_4_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: joint_4
+    joint: arm_joint_4
 
-  joint_5_Velocity_controller:
+  arm_joint_5_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: joint_5
+    joint: arm_joint_5
 
-
-  caster_joint_fl_Velocity_controller:
+  gripper_finger_joint_l_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: caster_joint_fl
+    joint: gripper_finger_joint_l
 
-  caster_joint_fr_Velocity_controller:
+  gripper_finger_joint_r_Velocity_controller:
     type: velocity_controllers/JointVelocityController
-    joint: caster_joint_fr
-
-  caster_joint_bl_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: caster_joint_bl
-
-  caster_joint_br_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: caster_joint_br
-
-  wheel_joint_fl_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: wheel_joint_fl
-
-  wheel_joint_fr_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: wheel_joint_fr
-
-  wheel_joint_bl_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: wheel_joint_bl
-
-  wheel_joint_br_Velocity_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: wheel_joint_br
+    joint: gripper_finger_joint_r

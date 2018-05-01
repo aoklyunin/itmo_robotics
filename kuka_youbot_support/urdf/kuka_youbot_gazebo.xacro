@@ -2,113 +2,92 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
     <xacro:macro name="kuka_youbot_gazebo" params="prefix">
 
-        <gazebo reference="${prefix}link_0">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo reference="${prefix}link_1">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo reference="${prefix}link_2">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo reference="${prefix}link_3">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo reference="${prefix}link_4">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo reference="${prefix}link_5">
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- front left wheel -->
-        <gazebo reference="${prefix}wheel_link_fl">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- front right wheel -->
-        <gazebo reference="${prefix}wheel_link_fr">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- back left wheel -->
-        <gazebo reference="${prefix}wheel_link_bl">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- back right wheel -->
-        <gazebo reference="${prefix}wheel_link_br">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-
-        <!-- front left wheel -->
-        <gazebo reference="${prefix}caster_link_fl">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- front right wheel -->
-        <gazebo reference="${prefix}caster_link_fr">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- back left wheel -->
-        <gazebo reference="${prefix}caster_link_bl">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <!-- back right wheel -->
-        <gazebo reference="${prefix}caster_link_br">
-            <material value="Orange"/>
-            <turnGravityOff>false</turnGravityOff>
-            <selfCollide>true</selfCollide>
-        </gazebo>
-
-        <gazebo>
-
-            <plugin name="ground_truth"
-                    filename="libgazebo_ros_p3d.so">
-                <frameName>map</frameName>
-                <bodyName>${prefix}base_link</bodyName>
-                <topicName>kuka_youbot/odom</topicName>
-                <updateRate>30.0</updateRate>
+        <!--***********************ARM****************************-->
+         <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotNamespace>/kuka_youbot</robotNamespace>
             </plugin>
         </gazebo>
-
-
-        <!-- Chassis -->
-        <gazebo reference="${prefix}base_link">
+        <gazebo reference="${prefix}arm_link_0">
+            <material value="youbot/DarkGrey"/>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <gazebo reference="${prefix}arm_link_1">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <gazebo reference="${prefix}arm_link_2">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <gazebo reference="${prefix}arm_link_3">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <gazebo reference="${prefix}arm_link_4">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <gazebo reference="${prefix}arm_link_5">
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <!--*********************BASE*******************************-->
+        <gazebo reference="youbot_base">
+            <material value="youbot/DarkGrey"/>
+        </gazebo>
+        <gazebo reference="wheel_link_fl">
+            <material value="youbot/Orange"/>
+            <kp>1000000</kp>
+            <kd>100</kd>
+        </gazebo>
+        <gazebo reference="caster_link_fl">
+            <material value="youbot/Orange"/>
+        </gazebo>
+        <gazebo reference="wheel_link_fr">
+            <material value="youbot/Orange"/>
+            <kp>1000000</kp>
+            <kd>100</kd>
+        </gazebo>
+        <gazebo reference="caster_link_fr">
+            <material value="youbot/Orange"/>
+        </gazebo>
+        <gazebo reference="wheel_link_bl">
+            <material value="youbot/Orange"/>
+            <kp>1000000</kp>
+            <kd>100</kd>
+        </gazebo>
+        <gazebo reference="caster_link_bl">
+            <material value="youbot/Orange"/>
+        </gazebo>
+        <gazebo reference="wheel_link_br">
+            <material value="youbot/Orange"/>
+            <kp>1000000</kp>
+            <kd>100</kd>
+        </gazebo>
+        <gazebo reference="caster_link_br">
+            <material value="youbot/Orange"/>
+        </gazebo>
+          <gazebo reference="${prefix}_palm_link">
+            <material>Gazebo/Black</material>
             <turnGravityOff>false</turnGravityOff>
             <selfCollide>true</selfCollide>
-
         </gazebo>
-
-
+        <gazebo>
+            <plugin name="base_controller" filename="libgazebo_ros_planar_move.so">
+                <commandTopic>/kuka_youbot/cmd_vel</commandTopic>
+                <odometryTopic>/kuka_youbot/odom</odometryTopic>
+                <odometryFrame>/kuka_youbot/odom</odometryFrame>
+                <odometryRate>100.0</odometryRate>
+                <robotBaseFrame>base_footprint</robotBaseFrame>
+            </plugin>
+        </gazebo>
+        <!--***************************************GRIPPER*****************************-->
+        <gazebo reference="${prefix}_finger_l_link">
+            <material>Gazebo/Black</material>
+            <turnGravityOff>false</turnGravityOff>
+            <selfCollide>true</selfCollide>
+        </gazebo>
+        <gazebo reference="${prefix}_finger_r_link">
+            <material>Gazebo/Black</material>
+            <turnGravityOff>false</turnGravityOff>
+            <selfCollide>true</selfCollide>
+        </gazebo>
     </xacro:macro>
 </robot>
 
