@@ -1,0 +1,76 @@
+{
+  "name": "Kuka Youbot",
+  "links": [
+    {
+      "name": "arm_joint_1",
+      "theta": -170.0,
+      "d": 147,
+      "a": 33,
+      "alpha": 90,
+      "virtual": false
+    },
+    {
+      "name": "arm_joint_2",
+      "theta": -65.0,
+      "d": 0,
+      "a": 155,
+      "alpha": 0,
+      "virtual": false
+    },
+    {
+      "name": "arm_joint_3",
+      "theta": 150,
+      "d": 0,
+      "a": 135,
+      "alpha": 90,
+      "virtual": false
+    },
+    {
+      "name": "arm_joint_4",
+      "theta": 0,
+      "d": 0,
+      "a": 0,
+      "alpha": 90,
+      "virtual": false
+    },
+    {
+      "name": "arm_joint_5",
+      "theta": -90.0,
+      "d": 217.5,
+      "a": 0,
+      "alpha": 0,
+      "virtual": false
+    }
+  ],
+  "jointInitValues": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "jointRanges": [
+    [
+      0.011,
+      5.840
+    ],
+    [
+      0.011,
+      2.617
+    ],
+    [
+      -5.0,
+      -0.02
+    ],
+    [
+      0.03,
+      3.42
+    ],
+    [
+      0.15,
+      5.641
+    ]
+  ]
+}
+

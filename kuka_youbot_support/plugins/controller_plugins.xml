@@ -1,0 +1,7 @@
+<library path="lib/libyoubot_universal_control">
+  <class
+          name="kuka_youbot_support/YouBotUniversalController"
+          type="controller::YouBotUniversalController"
+          base_class_type="pr2_controller_interface::Controller"
+  />
+</library>

@@ -338,7 +338,7 @@
             <parent link="${prefix}arm_link_0"/>
             <child link="${prefix}arm_link_1"/>
             <axis xyz="0 0 -1"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.05" friction="0.05"/>
             <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${PI * (169 + 169) / 180}"/>
         </joint>
         <joint name="${prefix}arm_joint_2" type="revolute">
@@ -346,7 +346,7 @@
             <parent link="${prefix}arm_link_1"/>
             <child link="${prefix}arm_link_2"/>
             <axis xyz="0 1 0"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.05" friction="0.05"/>
             <limit effort="${9.5}" velocity="${PI / 2.0}" lower="0" upper="${PI * (90 + 65) / 180}"/>
         </joint>
         <joint name="${prefix}arm_joint_3" type="revolute">
@@ -354,7 +354,7 @@
             <parent link="${prefix}arm_link_2"/>
             <child link="${prefix}arm_link_3"/>
             <axis xyz="0 1 0"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.05" friction="0.05"/>
             <limit effort="${6}" velocity="${PI / 2.0}" lower="-${PI * (146 + 151) / 180}" upper="0"/>
         </joint>
         <joint name="${prefix}arm_joint_4" type="revolute">
@@ -362,7 +362,7 @@
             <parent link="${prefix}arm_link_3"/>
             <child link="${prefix}arm_link_4"/>
             <axis xyz="0 1 0"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.05" friction="0.05"/>
             <limit effort="${2}" velocity="${PI / 2.0}" lower="0" upper="${PI * (102.5 + 102.5) / 180}"/>
         </joint>
         <joint name="${prefix}arm_joint_5" type="revolute">
@@ -370,7 +370,7 @@
             <parent link="${prefix}arm_link_4"/>
             <child link="${prefix}arm_link_5"/>
             <axis xyz="0 0 -1"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.05" friction="0.05"/>
             <limit effort="1" velocity="${PI / 2.0}" lower="0" upper="${PI * (167.5 + 167.5) / 180}"/>
         </joint>
 
