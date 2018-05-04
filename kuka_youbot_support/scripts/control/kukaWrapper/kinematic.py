@@ -16,7 +16,7 @@ def sign(a):
     return 0
 
 
-def getDHMatrix(alpha, a, d, theta):
+def getDHMatrix(theta, d, a, alpha):
     """
         Возвращает матрицу преобразования
     :param alpha, a, d, theta: DH параметры
@@ -30,75 +30,21 @@ def getDHMatrix(alpha, a, d, theta):
          ])
 
 
-def getG(qList, tList):
+def getTransfromMatrix(jointCnt, jointDescriptions, position):
     """
-        Значение моментов по положению
-    :param qList: массив из пяти обощённых координат
-    :return: массив из пяти моментов
+        по положению получаем матрицу перехода из энд-эффектора в асолютную систему координат
+    :param position: массив из пяти элементов с обобщёнными координатами робота
+    :return: Матрица преобразования 4х4
     """
-    q1 = qList[0]
-    q2 = qList[1]
-    q3 = qList[2]
-    q4 = qList[3]
-    q5 = qList[4]
 
-    t1 = sign(tList[0])
-    t2 = sign(tList[1])
-    t3 = sign(tList[2])
-    t4 = sign(tList[3])
-    t5 = sign(tList[4])
-
-    return [0,
-            0.4998 * t2 + 0.6754 * cos(q2 + q3 + q4) - 1.647 * sin(q2 + q3 + q4) - 0.06341 * cos(
-                q2 + q3 + q4 + q5) + 0.06085 * sin(q2 + q3 + q4 + q5) - 2.94 * cos(q2 + q3) + 0.06341 * cos(
-                q2 + q3 + q4 - 1.0 * q5) - 0.5982 * sin(q2 + q3) + 0.06085 * sin(q2 + q3 + q4 - 1.0 * q5) + 3.753 * cos(
-                q2) - 2.093 * sin(q2),
-            0.6754 * cos(q2 + q3 + q4) - 0.01009 * t3 - 1.647 * sin(q2 + q3 + q4) - 0.06341 * cos(
-                q2 + q3 + q4 + q5) + 0.06085 * sin(q2 + q3 + q4 + q5) - 2.94 * cos(q2 + q3) + 0.06341 * cos(
-                q2 + q3 + q4 - 1.0 * q5) - 0.5982 * sin(q2 + q3) + 0.06085 * sin(q2 + q3 + q4 - 1.0 * q5),
-            0.094 * t4 + 0.6754 * cos(q2 + q3 + q4) - 1.647 * sin(q2 + q3 + q4) - 0.06341 * cos(
-                q2 + q3 + q4 + q5) + 0.06085 * sin(q2 + q3 + q4 + q5) + 0.06341 * cos(
-                q2 + q3 + q4 - 1.0 * q5) + 0.06085 * sin(
-                q2 + q3 + q4 - 1.0 * q5),
-            0.3248 * t5 - 0.06341 * cos(q2 + q3 + q4 + q5) + 0.06085 * sin(q2 + q3 + q4 + q5) - 0.06341 * cos(
-                q2 + q3 + q4 - 1.0 * q5) - 0.06085 * sin(q2 + q3 + q4 - 1.0 * q5)
-            ]
+    transformationMatrix = np.identity(4)
 
 
-def getNewG(qList):
-    """
-        Значение моментов по положению
-    :param qList: массив из пяти обощённых координат
-    :return: массив из пяти моментов
-    """
-    q1 = qList[0]
-    q2 = qList[1]
-    q3 = qList[2]
-    q4 = qList[3]
-    q5 = qList[4]
-    theta = [
-        1.5905,
-        -2.2143,
-        0.4223,
-        0.0216,
-        0.5406,
-        0.8684,
-        0.0093,
-        0.0313,
-        0.1889,
-        0.1109,
-        0.0536,
-        0.0585
-    ]
+    for i in range(jointCnt):
+        jointTransformationMatrix = getDHMatrix(jointDescriptions[i]["theta"] + position[i], jointDescriptions[i]["d"],
+                                                jointDescriptions[i]["a"],
+                                                jointDescriptions[i]["alpha"])
 
-    W = [[-sin(q2), cos(q2 + q3), -sin(q2 + q3), 155 * cos(q2), cos(q2 + q3 + q4), -sin(q2 + q3 + q4),
-          - sin(q2 + q3 + q4 + q5) / 2 - sin(q2 + q3 + q4 - q5) / 2,
-          cos(q2 + q3 + q4 - q5) / 2 - cos(q2 + q3 + q4 + q5) / 2],
-         [0, cos(q2 + q3), -sin(q2 + q3), 0, cos(q2 + q3 + q4), -sin(q2 + q3 + q4),
-          - sin(q2 + q3 + q4 + q5) / 2 - sin(q2 + q3 + q4 - q5) / 2,
-          cos(q2 + q3 + q4 - q5) / 2 - cos(q2 + q3 + q4 + q5) / 2],
-         [0, 0, 0, 0, cos(q2 + q3 + q4), -sin(q2 + q3 + q4),
-          - sin(q2 + q3 + q4 + q5) / 2 - sin(q2 + q3 + q4 - q5) / 2,
-          cos(q2 + q3 + q4 - q5) / 2 - cos(q2 + q3 + q4 + q5) / 2],
-         [0, 0, 0, 0, 0, 0, sin(q2 + q3 + q4 - q5) / 2 - sin(q2 + q3 + q4 + q5) / 2,
-          - cos(q2 + q3 + q4 + q5) / 2 - cos(q2 + q3 + q4 - q5) / 2]]
+        transformationMatrix = transformationMatrix*jointTransformationMatrix
+
+    return transformationMatrix

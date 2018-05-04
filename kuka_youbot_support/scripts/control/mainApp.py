@@ -9,8 +9,10 @@ import wx
 import rospy
 from forms import KukaFrame
 
-
 # класс приложения
+from kukaController import KukaController
+
+
 class App(wx.App):
     """
         класс приложения
@@ -25,8 +27,8 @@ class App(wx.App):
         self.node_name = "fucking_kuka_node"
         # инициализируем ноду роса
         rospy.init_node(self.node_name)
-        # создание окна
-        self.frame = KukaFrame(None, -1, "Position", "Kuka Controller")
+        # создаём объект для взаимодействия с роботом
+        self.frame = KukaFrame(KukaController("Position"))
         # отображение окна
         self.frame.Show(True)
         # указываем, что только что созданное окно - главное

@@ -29,8 +29,6 @@
 	            arm_joint_3_$(arg control_type)_controller
 	            arm_joint_4_$(arg control_type)_controller
 	            arm_joint_5_$(arg control_type)_controller
-	            gripper_finger_joint_r_$(arg control_type)_controller
-	            gripper_finger_joint_l_$(arg control_type)_controller
     "/>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"

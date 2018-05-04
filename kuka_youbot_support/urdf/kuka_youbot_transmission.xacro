@@ -106,22 +106,6 @@
                 <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
             </joint>
         </transmission>
-        <!--**************************GRIPPER************************************-->
-        <transmission name="${prefix}gripper_finger_l_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <actuator name="${prefix}gripper_finger_l_motor"/>
-            <joint name="${prefix}gripper_finger_joint_l">
-                <hardwareInterface>hardware_interface/${control_type}JointInterface</hardwareInterface>
-            </joint>
-        </transmission>
-
-        <transmission name="${prefix}gripper_finger_r_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <actuator name="${prefix}gripper_finger_r_motor"/>
-            <joint name="${prefix}gripper_finger_joint_r">
-                <hardwareInterface>hardware_interface/${control_type}JointInterface</hardwareInterface>
-            </joint>
-        </transmission>
 
     </xacro:macro>
 </robot>

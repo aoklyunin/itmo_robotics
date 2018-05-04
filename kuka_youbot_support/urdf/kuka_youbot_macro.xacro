@@ -439,21 +439,15 @@
             <parent link="${prefix}arm_link_5"/>
             <child link="${prefix}_palm_link"/>
         </joint>
-        <joint name="${prefix}gripper_finger_joint_l" type="prismatic">
+        <joint name="${prefix}gripper_finger_joint_l" type="fixed">
             <origin xyz="0.004 0.008 0.046" rpy="0 0 ${PI}"/>
             <parent link="${prefix}_palm_link"/>
             <child link="${prefix}gripper_finger_link_l"/>
-            <axis xyz="0 -1 0"/>
-            <dynamics damping="1.0" friction="1.0"/>
-            <limit effort="1" velocity="0.1" lower="0" upper="0.0115"/>
         </joint>
-        <joint name="${prefix}gripper_finger_joint_r" type="prismatic">
+        <joint name="${prefix}gripper_finger_joint_r" type="fixed">
             <origin xyz="0.004 -0.008 0.046" rpy="0 0 0"/>
             <parent link="${prefix}_palm_link"/>
             <child link="${prefix}gripper_finger_link_r"/>
-            <axis xyz="0 -1 0"/>
-            <dynamics damping="1.0" friction="1.0"/>
-            <limit effort="1" velocity="0.1" lower="0" upper="0.0115"/>
         </joint>
 
     </xacro:macro>
