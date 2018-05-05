@@ -35,9 +35,9 @@
       "name": "arm_joint_4",
       "parent": "arm_link_3",
       "child": "arm_link_4",
-      "theta": -102.5,
+      "theta": -12.5,
       "d": 0.0,
-      "a": 135.0,
+      "a": 0.0,
       "alpha": 90.0,
       "virtual": false
     },
@@ -45,9 +45,9 @@
       "name": "arm_joint_5",
       "parent": "arm_link_4",
       "child": "arm_link_5",
-      "theta": 192.5,
-      "d": 130,
-      "a": 2,
+      "theta": 12.5,
+      "d": 211.0,
+      "a": 0,
       "alpha": 0.0,
       "virtual": false
     }
