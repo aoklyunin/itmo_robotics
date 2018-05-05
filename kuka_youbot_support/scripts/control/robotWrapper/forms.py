@@ -4,10 +4,9 @@
     Родительский модуль для описания окна приложения
 """
 
-from abc import ABCMeta, abstractmethod, abstractproperty
-
 import wx
 import wx.grid as gridlib
+from strop import join
 
 
 class Frame(wx.Frame):
@@ -15,17 +14,13 @@ class Frame(wx.Frame):
         Класс для описания окна приложения
     """
 
-    @abstractmethod
     def initExpItems(self):
         """Инициализация элементов управления экспериментами"""
+        pass
 
-    @abstractmethod
-    def OnTest(self, event):
-        """Тестовый метод"""
-
-    @abstractmethod
     def ExpTimer(self):
         """Таймер для экспериментов. Срабатывает раз в пол-секунды"""
+        pass
 
     def initRobotGrid(self):
         """
@@ -60,6 +55,7 @@ class Frame(wx.Frame):
         """
         # останавливаем таймер
         self.timer.Stop()
+        self.kuka.destroy()
         self.Close()
 
     def setDataToGrid(self, rd):
@@ -126,10 +122,18 @@ class Frame(wx.Frame):
         """
             Задать координаты в декартовом пространстве
                 """
-        endEffectorPos = self.kuka.getEndEffectorPosition()
-        self.posXText.SetLabel("X: " + str(round(endEffectorPos[0])))
-        self.posYText.SetLabel("Y: " + str(round(endEffectorPos[1])))
-        self.posZText.SetLabel("Z: " + str(round(endEffectorPos[2])))
+        joint_num = 4
+
+        endEffectorPos = self.kuka.rd.getJointCartesianPositionFromDHParams(joint_num)
+        endEffectorQuaternion = self.kuka.rd.getJointQuaternionFromDHParams(joint_num)
+        self.posXText.SetLabel("X: %d" % round(endEffectorPos[0]*1000))
+        self.posYText.SetLabel("Y: %d" % round(endEffectorPos[1]*1000))
+        self.posZText.SetLabel("Z: %d" % round(endEffectorPos[2]*1000))
+
+        self.qtXText.SetLabel("X: %d" % round(endEffectorQuaternion[0]*1000))
+        self.qtYText.SetLabel("Y: %d" % round(endEffectorQuaternion[1]*1000))
+        self.qtZText.SetLabel("Z: %d" % round(endEffectorQuaternion[2]*1000))
+        self.qtWText.SetLabel("W: %d" % round(endEffectorQuaternion[3]*180))
 
     def OnClearJointCommands(self, event):
         """
@@ -145,10 +149,10 @@ class Frame(wx.Frame):
         """
             конструктор
         """
-        self.kuka = kuka
+
         # создаём фрейм
         wx.Frame.__init__(self, parent, id, title, pos, size)
-
+        self.kuka = kuka
         # добавляем на фрейм панель
         self.panel = wx.Panel(self)
         # инициализируем панель
@@ -198,9 +202,16 @@ class Frame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnUpdateJointCommands, self.updateJointCommandsBtn)
 
         # Положение в Декартовом пространстве
-        self.posXText = wx.StaticText(self.panel, -1, "X", (120, 350))
-        self.posYText = wx.StaticText(self.panel, -1, "Y", (190, 350))
-        self.posZText = wx.StaticText(self.panel, -1, "Z", (260, 350))
+        self.posXText = wx.StaticText(self.panel, -1, "X", (20, 350))
+        self.posYText = wx.StaticText(self.panel, -1, "Y", (70, 350))
+        self.posZText = wx.StaticText(self.panel, -1, "Z", (130, 350))
+
+        # Положение в Декартовом пространстве
+        self.qtXText = wx.StaticText(self.panel, -1, "X", (230, 350))
+        self.qtYText = wx.StaticText(self.panel, -1, "Y", (280, 350))
+        self.qtZText = wx.StaticText(self.panel, -1, "Z", (330, 350))
+        self.qtWText = wx.StaticText(self.panel, -1, "W", (380, 350))
+
 
         self.jointControlLabel = wx.StaticText(self.panel, -1, "Manipulator Control", (160, 245))
 

@@ -7,7 +7,7 @@
 """
 
 from kukaController import KukaController
-from kukaWrapper.forms import Frame
+from robotWrapper.forms import Frame
 import wx
 
 
@@ -26,5 +26,5 @@ class KukaFrame(Frame):
         """
             Таймер, срабатывает два раза в секунду. Всё, что сюда напишешь будет выполняться каждые 500 мсек
         """
-        pass
+        self.kuka.robotTimer()
 

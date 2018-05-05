@@ -3,42 +3,52 @@
   "links": [
     {
       "name": "arm_joint_1",
-      "theta": -170.0,
-      "d": 147,
-      "a": 33,
-      "alpha": 90,
+      "parent": "arm_link_0",
+      "child": "arm_link_1",
+      "theta": 170.0,
+      "d": 147.0,
+      "a": 33.0,
+      "alpha": 90.0,
       "virtual": false
     },
     {
       "name": "arm_joint_2",
-      "theta": -65.0,
-      "d": 0,
-      "a": 155,
-      "alpha": 0,
+      "parent": "arm_link_1",
+      "child": "arm_link_2",
+      "theta": 25.0,
+      "d": 0.0,
+      "a": 155.0,
+      "alpha": 0.0,
       "virtual": false
     },
     {
       "name": "arm_joint_3",
-      "theta": 150,
-      "d": 0,
-      "a": 135,
-      "alpha": 90,
+      "parent": "arm_link_2",
+      "child": "arm_link_3",
+      "theta": 146.0,
+      "d": 0.0,
+      "a": 135.0,
+      "alpha": 0.0,
       "virtual": false
     },
     {
       "name": "arm_joint_4",
-      "theta": 0,
-      "d": 0,
-      "a": 0,
-      "alpha": 90,
+      "parent": "arm_link_3",
+      "child": "arm_link_4",
+      "theta": -102.5,
+      "d": 0.0,
+      "a": 135.0,
+      "alpha": 90.0,
       "virtual": false
     },
     {
       "name": "arm_joint_5",
-      "theta": -90.0,
-      "d": 217.5,
-      "a": 0,
-      "alpha": 0,
+      "parent": "arm_link_4",
+      "child": "arm_link_5",
+      "theta": 192.5,
+      "d": 130,
+      "a": 2,
+      "alpha": 0.0,
       "virtual": false
     }
   ],
@@ -71,6 +81,19 @@
       0.15,
       5.641
     ]
-  ]
+  ],
+  "baseTranform": {
+    "translation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "w": 0
+    }
+  }
 }
 

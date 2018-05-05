@@ -7,6 +7,10 @@
 import numpy as np
 from numpy import cos, sin
 
+import functools,operator
+
+from transformations import rotation_matrix, translation_matrix
+
 
 def sign(a):
     if a > 0:
@@ -30,7 +34,17 @@ def getDHMatrix(theta, d, a, alpha):
          ])
 
 
-def getTransfromMatrix(jointCnt, jointDescriptions, position):
+def printMatrix(matrix,prefix=""):
+    print(prefix+"[")
+    for row in matrix.tolist():
+        printList(row,prefix+"  ")
+    print(prefix+"]")
+
+def printList(lst,prefix=""):
+    print(prefix+"["+functools.reduce(operator.add, ["%5.2f " % e for e in lst])+"]")
+
+
+def getTransfromMatrixFromDH(joint_num, jointDescriptions, position):
     """
         по положению получаем матрицу перехода из энд-эффектора в асолютную систему координат
     :param position: массив из пяти элементов с обобщёнными координатами робота
@@ -38,13 +52,29 @@ def getTransfromMatrix(jointCnt, jointDescriptions, position):
     """
 
     transformationMatrix = np.identity(4)
-
-
-    for i in range(jointCnt):
-        jointTransformationMatrix = getDHMatrix(jointDescriptions[i]["theta"] + position[i], jointDescriptions[i]["d"],
+    # print("+++++++++++++++++++++++++++++++++++++++++++")
+    for i in range(joint_num + 1):
+        jointTransformationMatrix = getDHMatrix(jointDescriptions[i]["theta"] + position[i],
+                                                jointDescriptions[i]["d"],
                                                 jointDescriptions[i]["a"],
                                                 jointDescriptions[i]["alpha"])
 
-        transformationMatrix = transformationMatrix*jointTransformationMatrix
+        transformationMatrix = np.matmul(transformationMatrix, jointTransformationMatrix)
+    #     printList([jointDescriptions[i]["theta"] + position[i],
+    #            jointDescriptions[i]["d"],
+    #            jointDescriptions[i]["a"],
+    #            jointDescriptions[i]["alpha"]])
+    #
+    #     printMatrix(jointTransformationMatrix)
+    #
+    # printMatrix(transformationMatrix)
 
     return transformationMatrix
+
+
+def getTransformMatrix(translation, rotationAxe, rotationAngle):
+    rm = rotation_matrix(rotationAngle, rotationAxe)
+    rm[0, 3] = translation[0]
+    rm[1, 3] = translation[1]
+    rm[2, 3] = translation[2]
+    return rm

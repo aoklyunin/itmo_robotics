@@ -77,6 +77,8 @@
                 <robotBaseFrame>${prefix}${main_frame_name}</robotBaseFrame>
             </plugin>
         </gazebo>
+
+
         <!--***************************************GRIPPER*****************************-->
         <gazebo reference="${prefix}_finger_l_link">
             <material>Gazebo/Black</material>
